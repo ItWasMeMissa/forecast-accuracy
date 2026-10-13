@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 *.jsonl
 *.zip
+*.db
+*.sqlite3
+.env

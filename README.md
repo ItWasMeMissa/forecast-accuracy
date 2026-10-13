@@ -15,7 +15,7 @@ Is a forecast made 6 hours ahead better than one made 48 hours ahead, and does i
 ## Data source
 
 Weather data by [Open-Meteo.com](https://open-meteo.com/) (free API, non-commercial use).
-[Check the exact attribution wording in their terms and put it here.]
+Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast values are stored unchanged.
 
 ## Plan
 
