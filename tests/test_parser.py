@@ -14,8 +14,8 @@ def test_correct_response():
     sample = load_sample()
 
     assert len(response) == 72
-    assert response[1]['forecast_time'] and response[1]['temperature'] == (sample['hourly']['time'][1] and sample['hourly']['temperature_2m'][1])
-    assert response[-1]['forecast_time'] and response[-1]['temperature'] == (sample['hourly']['time'][-1] and sample['hourly']['temperature_2m'][-1])
+    assert response[1]['forecast_time'], response[1]['temperature'] == ('2026-10-09T01:00', 19.7)
+    assert response[-1]['forecast_time'], response[-1]['temperature'] == ('2026-10-11T23:00', 18.9)
 
 
 def test_dict_without_hourly():
@@ -54,7 +54,8 @@ def test_none_in_forecast_time():
 
 
 def test_none_in_temperature():
-    parse_weather(response={'hourly': {'time': [1, 2, 3], 'temperature_2m': [1, None, 3]}}, city='Rome', fetched_at='x')
+    resalt = parse_weather(response={'hourly': {'time': [1, 2, 3], 'temperature_2m': [1, None, 3]}}, city='Rome', fetched_at='x')
+    assert resalt[1]['temperature'] is None
 
     with pytest.raises(ParseError):
         parse_weather(response={'hourly': {'time': [1, 2, 3], 'temperature_2m': None}}, city='Rome', fetched_at='x')
