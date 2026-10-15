@@ -7,24 +7,24 @@ def parse_weather(response, city, fetched_at):
         raise ParseError()
 
     try:
-        if 'hourly' not in response or not all(e in response['hourly'] for e in ['time', 'temperature_2m']):
+        if not isinstance(response['hourly'], dict):
             raise ParseError()
-        else:
-            forecast_time = response['hourly']['time']
-            temperature = response['hourly']['temperature_2m']
-    except TypeError:
+    except KeyError:
         raise ParseError()
 
-    try:
-        if None in forecast_time:
-            raise ParseError()
-    except TypeError:
+    if 'hourly' not in response or not all(e in response['hourly'] for e in ['time', 'temperature_2m']):
+        raise ParseError()
+    else:
+        forecast_time = response['hourly']['time']
+        temperature = response['hourly']['temperature_2m']
+
+    if not isinstance(forecast_time, list) or not isinstance(temperature, list):
         raise ParseError()
 
-    try:
-        if len(forecast_time) != len(temperature) :
-            raise ParseError()
-    except TypeError:
+    if None in forecast_time:
+        raise ParseError()
+
+    if len(forecast_time) != len(temperature) :
         raise ParseError()
 
     response_dict = []

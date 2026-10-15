@@ -6,16 +6,19 @@ from weather import parse_weather, ParseError
 FIXTURE = pathlib.Path(__file__).parent / 'forecast.json'
 
 def load_sample():
-    with open(FIXTURE) as f:
+    with open(FIXTURE, encoding='utf-8') as f:
         return json.load(f)
 
 def test_correct_response():
     response = parse_weather(response=load_sample(), city='Rome', fetched_at='x')
-    sample = load_sample()
 
-    assert len(response) == 72
-    assert response[1]['forecast_time'], response[1]['temperature'] == ('2026-10-09T01:00', 19.7)
-    assert response[-1]['forecast_time'], response[-1]['temperature'] == ('2026-10-11T23:00', 18.9)
+    assert len(response) == 48
+
+    assert response[0]['forecast_time'] == '2026-10-14T00:00'
+    assert response[0]['temperature'] == 13.1
+
+    assert response[-1]['forecast_time'] == '2026-10-15T23:00'
+    assert response[-1]['temperature'] == 15.8
 
 
 def test_dict_without_hourly():

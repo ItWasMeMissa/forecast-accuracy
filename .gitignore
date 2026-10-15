@@ -2,6 +2,7 @@
 venv/
 .venv/
 __pycache__/
+record_sample.py
 *.pyc
 *.jsonl
 *.zip
