@@ -20,7 +20,7 @@ Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast 
 ## Plan
 
 - [x] Fetch and parse a forecast for one city
-- [ ] Store snapshots in SQLite without duplicates
+- [x] Store snapshots in SQLite without duplicates
 - [ ] Handle network errors, timeouts and missing values
 - [ ] Compute the average error per city and lead time
 - [ ] HTTP API (FastAPI)

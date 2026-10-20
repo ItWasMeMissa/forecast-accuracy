@@ -9,3 +9,6 @@ record_sample.py
 *.db
 *.sqlite3
 .env
+*.db-journal
+*.db-wal
+*.db-shm
