@@ -12,15 +12,6 @@ def load():
         return json.load(f)
 
 
-@pytest.fixture
-def con():
-    con = sqlite3.connect(':memory:')
-    storage.create_table(con)
-
-    yield con
-
-    con.close()
-
 def test_normal_handling(con):
     storage.save_to_table(con, parse_weather(load(), 'Rome', 'x'))
 
