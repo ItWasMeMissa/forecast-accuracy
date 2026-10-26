@@ -15,7 +15,7 @@ def con():
 
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
-    def blocked(*a, **K):
+    def blocked(*a, **kwargs):
         raise RuntimeError("real network is blocked in test")
 
     monkeypatch.setattr(socket,'getaddrinfo', blocked)

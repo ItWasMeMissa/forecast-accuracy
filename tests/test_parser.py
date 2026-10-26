@@ -1,7 +1,7 @@
 import pytest
 import json
 import pathlib
-from weather import parse_weather, ParseError
+from parser import parse_weather, ParseError
 
 FIXTURE = pathlib.Path(__file__).parent / 'forecast.json'
 

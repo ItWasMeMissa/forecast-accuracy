@@ -1,5 +1,5 @@
 from open_meteo import fetch_forecast, FetchError
-from weather import parse_weather, ParseError
+from parser import parse_weather, ParseError
 from storage import create_table, save_to_table
 from datetime import datetime, timezone
 
@@ -36,7 +36,3 @@ def main(db_path):
         print('parse error') #todo temporary remake
     finally:
         con.close()
-
-
-if __name__ == '__main__':
-    main('weather_forecast.db')

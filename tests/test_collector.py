@@ -6,7 +6,7 @@ import requests
 from collector import floor_to_hour, collect_once, TimeError
 from datetime import datetime, timezone, timedelta
 from open_meteo import FetchError
-from weather import ParseError
+from parser import ParseError
 
 
 @pytest.mark.parametrize('t, expected', [
