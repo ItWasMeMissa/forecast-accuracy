@@ -1,4 +1,4 @@
 from collector import main
 
 if __name__ == '__main__':
-    main('weather_forecast.db')
+    main('/forecast-data/first_try.db')
