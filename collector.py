@@ -2,6 +2,7 @@ from open_meteo import fetch_forecast, FetchError
 from parser import parse_weather, ParseError
 from storage import create_table, save_to_table
 from datetime import datetime, timezone
+from pathlib import Path
 
 import sqlite3
 
@@ -26,6 +27,8 @@ def collect_once(con, t, city, lat, lng):
     save_to_table(con, rows)
 
 def main(db_path):
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+
     con = sqlite3.connect(db_path)
     create_table(con)
     try:
