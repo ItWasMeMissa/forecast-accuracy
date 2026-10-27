@@ -80,3 +80,13 @@ def test_two_diff_connections(tmp_path):
 
     con_1.close()
     con_2.close()
+
+
+def test_save_returns(con):
+    rows = parse_weather(load(), 'Rome', 'x')
+
+    first_result = storage.save_to_table(con, rows)
+    second_result = storage.save_to_table(con, rows)
+
+    assert first_result == 48
+    assert second_result == 0

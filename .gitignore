@@ -12,3 +12,4 @@ record_sample.py
 *.db-journal
 *.db-wal
 *.db-shm
+*.log

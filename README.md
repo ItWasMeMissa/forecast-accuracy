@@ -21,6 +21,9 @@ Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast 
 
 - [x] Fetch and parse a forecast for one city
 - [x] Store snapshots in SQLite without duplicates
+- [x] Collector (one run)
+- [ ] Logging and exit codes
+- [ ] Hourly schedule
 - [ ] Handle network errors, timeouts and missing values
 - [ ] Compute the average error per city and lead time
 - [ ] HTTP API (FastAPI)
@@ -30,3 +33,32 @@ Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast 
 
 - "Actual" weather is taken from Open-Meteo's own current values, not from weather stations,
   so this measures consistency of the forecast with the service's own analysis.
+
+## How it works
+
+Each run does one pass through the pipeline:
+
+1. `collector.py` takes the current UTC time and floors it to the hour (`fetched_at`).
+2. `open_meteo.py` requests a 48-hour temperature forecast.
+3. `parser.py` validates the response and turns it into rows.
+4. `storage.py` saves the rows into SQLite, skipping duplicates.
+
+Running twice within the same hour does not create duplicates.
+
+## Quick start
+
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements-dev.txt
+    pytest
+    python run.py
+
+The database is created at `forecast-data/weather_forecast.db`.
+Tests never use the real network.
+
+## Data
+
+Table `weather_forecast`: `city`, `fetched_at`, `forecast_time`, `temperature`.
+A row is unique by `(city, fetched_at, forecast_time)`, so forecasts for the same
+hour made at different times are all kept. This is what makes accuracy by lead time possible.
+All times are UTC, ISO strings.
