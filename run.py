@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 import logging
 
@@ -14,4 +15,4 @@ if __name__ == '__main__':
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
-    main(db_path)
+    sys.exit(main(db_path))

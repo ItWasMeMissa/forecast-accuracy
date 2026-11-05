@@ -22,7 +22,7 @@ Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast 
 - [x] Fetch and parse a forecast for one city
 - [x] Store snapshots in SQLite without duplicates
 - [x] Collector (one run)
-- [ ] Logging and exit codes
+- [x] Logging and exit codes
 - [ ] Hourly schedule
 - [ ] Handle network errors, timeouts and missing values
 - [ ] Compute the average error per city and lead time

@@ -1,3 +1,5 @@
+import sys
+
 from open_meteo import fetch_forecast, FetchError
 from parser import parse_weather, ParseError
 from storage import create_table, save_to_table
@@ -40,7 +42,11 @@ def main(db_path):
         collect_once(con=con, t=datetime.now(timezone.utc), city='Rome',lat=41.9, lng=12.5)
     except FetchError:
         logger.exception("fetch failed")
+        return 1
     except ParseError:
         logger.exception("could not parse forecast")
+        return 1
     finally:
         con.close()
+
+    return 0

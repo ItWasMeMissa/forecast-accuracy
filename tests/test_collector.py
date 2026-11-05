@@ -186,10 +186,11 @@ def test_main_logs_cause_of_fetch_error(monkeypatch, caplog, tmp_path):
 
     caplog.set_level(logging.ERROR)
 
-    main(tmp_path / "test.db")
+    code = main(tmp_path / "test.db")
 
     con = sqlite3.connect(tmp_path / "test.db")
 
+    assert code == 1 
     assert caplog.records[-1].levelno == logging.ERROR
     assert "connection timed out" in caplog.text
     assert 0 == con.execute('SELECT COUNT(*) FROM weather_forecast').fetchone()[0]
@@ -209,10 +210,11 @@ def test_main_logs_cause_of_parse_error(monkeypatch, caplog, tmp_path):
 
     caplog.set_level(logging.ERROR)
 
-    main(tmp_path / "test.db")
+    code = main(tmp_path / "test.db")
 
     con = sqlite3.connect(tmp_path / "test.db")
 
+    assert code == 1
     assert caplog.records[-1].levelno == logging.ERROR
     assert "could not parse forecast" in caplog.text
     assert "different lengths" in caplog.text
@@ -229,10 +231,11 @@ def test_normal_main_handling(monkeypatch, caplog, tmp_path):
 
     caplog.set_level(logging.INFO)
 
-    main(tmp_path / "test.db")
+    code = main(tmp_path / "test.db")
 
     con = sqlite3.connect(tmp_path / "test.db")
 
+    assert code == 0
     assert "connected to database" in caplog.text
     assert con.execute("SELECT COUNT(*) FROM weather_forecast").fetchone()[0] == 48
 
