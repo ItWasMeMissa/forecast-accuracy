@@ -1,5 +1,3 @@
-import sys
-
 from open_meteo import fetch_forecast, FetchError
 from parser import parse_weather, ParseError
 from storage import create_table, save_to_table

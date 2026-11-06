@@ -23,7 +23,7 @@ Data is licensed under [CC BY 4.0](https://open-meteo.com/en/licence). Forecast 
 - [x] Store snapshots in SQLite without duplicates
 - [x] Collector (one run)
 - [x] Logging and exit codes
-- [ ] Hourly schedule
+- [x] Hourly schedule
 - [ ] Handle network errors, timeouts and missing values
 - [ ] Compute the average error per city and lead time
 - [ ] HTTP API (FastAPI)
@@ -62,3 +62,25 @@ Table `weather_forecast`: `city`, `fetched_at`, `forecast_time`, `temperature`.
 A row is unique by `(city, fetched_at, forecast_time)`, so forecasts for the same
 hour made at different times are all kept. This is what makes accuracy by lead time possible.
 All times are UTC, ISO strings.
+
+## Exit codes
+
+`run.py` exits with `0` when the run succeeded (including a run that found nothing
+new to save) and with `1` when fetching or parsing the forecast failed. The reason
+is written to `forecast-data/collector.log`.
+
+## Hourly schedule (cron)
+
+Run the collector at minute 5 of every hour. Use absolute paths, because cron
+starts programs with a minimal environment. Add this single line with `crontab -e`:
+
+    5 * * * * /path/to/forecast-accuracy/.venv/bin/python /path/to/forecast-accuracy/run.py >> /path/to/forecast-accuracy/forecast-data/cron.log 2>&1 || echo "$(date) failed" >> /path/to/forecast-accuracy/forecast-data/failures.log
+
+Logs:
+
+- `forecast-data/collector.log`: what each run did
+- `forecast-data/cron.log`: anything printed before logging starts
+- `forecast-data/failures.log`: one line per failed run
+
+The machine must be on at the scheduled time. A missed hour cannot be recovered,
+because the API returns only the current forecast.
